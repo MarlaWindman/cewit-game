@@ -6,13 +6,11 @@ import speech_recognition as sr
 from gtts import gTTS
 #creats image
 back = pygame.image.load("backg.png")
-playeri = pygame.image.load("player.png")
+playeri = pygame.image.load("Ttopviewpl.png")
 pygame.display.set_icon(playeri)
 #Makes screen
 sc = pygame.display.set_mode((800,800))
 sc.blit(back,(0,0))
-
-
 # can be color of background
 #sc.fill((56,0,67))
 #sets background
@@ -46,19 +44,60 @@ while run:
         if event.type == pygame.QUIT:
             run = False
     voice = audio()
-    # makes it jump
-    if "jump" in voice:
+    #print(voice)
+    # makes it go north
+    if "North" in voice:
+        hi = 1
+        #print(hi)
+        while hi == 1:
+            playery += -35
+            # updates and makes to go forward
+            sc.blit(back, (0, 0))
+            play(playerx, playery)
+            pygame.display.update()
+            #playery += -35
+            voice = audio()
+           # print(voice)
+            # stops going forward
+            if "stop" in voice:
+                hi = 0
         # change y axes up
-        playery += -35
-    if "left" in voice:
+        #playery += -35
+        print(voice)
+    if "West" in voice:
+        hi = 1
+        while hi == 1:
         # change y axes left
-        playerx += -35
-    if "right" in voice:
+            playerx += -35
+            sc.blit(back, (0, 0))
+            play(playerx, playery)
+            pygame.display.update()
+            voice = audio()
+            if "stop" in voice:
+                hi = 0
+
+    if "East" in voice:
+        hi = 1
+        while hi == 1:
         # change x axis right
-        playerx += 35
-    if "down" in voice:
+            playerx += 35
+            sc.blit(back, (0, 0))
+            play(playerx, playery)
+            pygame.display.update()
+            voice = audio()
+            if "stop" in voice:
+                hi = 0
+    if "South" in voice:
+        hi = 1
+        while hi == 1:
         # change y axes down
-        playery += 35
+            playery += 35
+            sc.blit(back, (0, 0))
+            play(playerx, playery)
+            pygame.display.update()
+            voice = audio()
+            if "stop" in voice:
+                hi = 0
     if "exit" in voice:
         # this exits the game
         run = False
@@ -69,4 +108,3 @@ while run:
     play(playerx,playery)
     # chages ever thing
     pygame.display.update()
-
