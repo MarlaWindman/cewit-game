@@ -5,9 +5,9 @@ import playsound
 import speech_recognition as sr
 from gtts import gTTS
 #creats image
-back = pygame.image.load("backg.png")
-playeri = pygame.image.load("Ttopviewpl.png")
-monster = pygame.image.load("Ttopviewpl.png")
+back = pygame.image.load("spath.png")
+playeri = pygame.image.load("testgal.png")
+monster = pygame.image.load("tsarm.png")
 pygame.display.set_icon(playeri)
 #Makes screen
 sc = pygame.display.set_mode((800,800))
