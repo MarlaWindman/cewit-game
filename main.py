@@ -5,8 +5,9 @@ import playsound
 import speech_recognition as sr
 from gtts import gTTS
 #creats image
-back = pygame.image.load("backg.png")
-playeri = pygame.image.load("player.png")
+back = pygame.image.load("spath.png")
+playeri = pygame.image.load("testgal.png")
+monster = pygame.image.load("tsarm.png")
 pygame.display.set_icon(playeri)
 #Makes screen
 sc = pygame.display.set_mode((800,800))
@@ -27,14 +28,19 @@ def audio():
 # sets up mic
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        audio = r.listen(source)
+        r.adjust_for_ambient_noise(source)
+        #r.adjust_for_ambient_noise(source)
+        audio = r.listen(source,timeout=1,phrase_time_limit=2)
+       # r.operation_timeout
         said = ""
+       # r.operation_timeout
+
     try:
         said = r.recognize_google(audio)
+        print(str(said))
     except Exception as e:
         print("I did not understand that")
     return said
-
 
 #playerx += 56
 # makes so it dose not close
@@ -44,19 +50,72 @@ while run:
         if event.type == pygame.QUIT:
             run = False
     voice = audio()
-    # makes it jump
-    if "jump" in voice:
+    print(voice)
+    # makes it go north
+    if "North" in voice:
+        hi = 1
+        #print(hi)
+        while hi == 1:
+            if playery <= 0:
+                playery = 0
+            else:
+                playery += -45
+            # updates and makes to go forward
+            sc.blit(back, (0, 0))
+            play(playerx, playery)
+            pygame.display.update()
+            #playery += -35
+            voice = audio()
+           # print(voice)
+            # stops going forward
+            if "stop" in voice:
+                hi = 0
         # change y axes up
-        playery += -35
-    if "left" in voice:
+        #playery += -35
+        print(voice)
+    if "West" in voice:
+        hi = 1
+        while hi == 1:
         # change y axes left
-        playerx += -35
-    if "right" in voice:
+            if playerx <= 0:
+                playerx = 0
+            else:
+                playerx += -95
+            sc.blit(back, (0, 0))
+            play(playerx, playery)
+            pygame.display.update()
+            voice = audio()
+            if "stop" in voice:
+                hi = 0
+
+    if "East" in voice:
+        hi = 1
+        while hi == 1:
         # change x axis right
-        playerx += 35
-    if "down" in voice:
+            if playerx >= 800:
+                playerx = 780
+            else:
+                playerx += 95
+            sc.blit(back, (0, 0))
+            play(playerx, playery)
+            pygame.display.update()
+            voice = audio()
+            if "stop" in voice:
+                hi = 0
+    if "South" in voice:
+        hi = 1
+        while hi == 1:
         # change y axes down
-        playery += 35
+            if playery >= 800:
+                playery = 0
+            else:
+                playery += 45
+            sc.blit(back, (0, 0))
+            play(playerx, playery)
+            pygame.display.update()
+            voice = audio()
+            if "stop" in voice:
+                hi = 0
     if "exit" in voice:
         # this exits the game
         run = False
@@ -67,4 +126,3 @@ while run:
     play(playerx,playery)
     # chages ever thing
     pygame.display.update()
-
