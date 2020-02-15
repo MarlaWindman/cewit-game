@@ -29,12 +29,14 @@ def audio():
     with sr.Microphone() as source:
         audio = r.listen(source)
         said = ""
+        r.operation_timeout
+
     try:
         said = r.recognize_google(audio)
+        print(str(said))
     except Exception as e:
         print("I did not understand that")
     return said
-
 
 #playerx += 56
 # makes so it dose not close
