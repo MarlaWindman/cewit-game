@@ -11,6 +11,8 @@ pygame.display.set_icon(playeri)
 #Makes screen
 sc = pygame.display.set_mode((800,800))
 sc.blit(back,(0,0))
+
+
 # can be color of background
 #sc.fill((56,0,67))
 #sets background
