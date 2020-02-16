@@ -4,14 +4,17 @@ import time
 import playsound
 import speech_recognition as sr
 from gtts import gTTS
+heath = 10
 #creats image
 back = pygame.image.load("spath.png")
+dishel = pygame.image.load("health.png")
 playeri = pygame.image.load("testgal.png")
 monster = pygame.image.load("tsarm.png")
 pygame.display.set_icon(playeri)
 #Makes screen
 sc = pygame.display.set_mode((800,800))
 sc.blit(back,(0,0))
+sc.blit(dishel,(0,0))
 # can be color of background
 #sc.fill((56,0,67))
 #sets background
@@ -33,7 +36,7 @@ def audio():
        # audio = r.listen(source,timeout=3,phrase_time_limit=1)
         try:
 
-            audio = r.listen(source,timeout=0.75,phrase_time_limit=1)
+            audio = r.listen(source,timeout=1.4,phrase_time_limit=1)
         except:
             pass
 
@@ -124,15 +127,19 @@ while run:
             voice = audio()
             if "stop" in voice:
                 hi = 0
-   # if "check health" in voice:
-
+    if "check health" in voice:
+        if heath == 10:
+            mh = pygame.image.load("10.png")
+            sc.blit(mh, (0, 0))
+            pygame.display.update()
+    #if "hit"
     if "exit" in voice:
         # this exits the game
         run = False
     #playerx_ch = -70.0
     #sc.remove(playeri)
     #playerx += 56
-    sc.blit(back,(0,0))
+   # sc.blit(back,(0,0))
     play(playerx,playery)
     # chages ever thing
     pygame.display.update()
