@@ -132,6 +132,8 @@ while run:
             mh = pygame.image.load("10.png")
             sc.blit(mh, (0, 0))
             pygame.display.update()
+            time.sleep(3)
+            sc.blit( dishel, (0, 0))
     #if "hit"
     if "exit" in voice:
         # this exits the game
