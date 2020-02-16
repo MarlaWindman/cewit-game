@@ -30,7 +30,13 @@ def audio():
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source)
         #r.adjust_for_ambient_noise(source)
-        audio = r.listen(source,timeout=1.75,phrase_time_limit=.5)
+       # audio = r.listen(source,timeout=3,phrase_time_limit=1)
+        try:
+
+            audio = r.listen(source,timeout=0.75,phrase_time_limit=1)
+        except:
+            pass
+
        # r.operation_timeout
         said = ""
        # r.operation_timeout
@@ -55,11 +61,13 @@ while run:
     if "North" in voice:
         hi = 1
         #print(hi)
+        voice = audio()
         while hi == 1:
             if playery <= 0:
                 playery = 0
             else:
-                playery += -45
+                for i in range(0,5):
+                    playery += -5
             # updates and makes to go forward
             sc.blit(back, (0, 0))
             play(playerx, playery)
