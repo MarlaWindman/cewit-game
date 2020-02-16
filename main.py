@@ -1,145 +1,132 @@
 import pygame
-import os
-import time
-import playsound
-import speech_recognition as sr
-from gtts import gTTS
-heath = 10
-#creats image
-back = pygame.image.load("spath.png")
-dishel = pygame.image.load("health.png")
-playeri = pygame.image.load("testgal.png")
-monster = pygame.image.load("tsarm.png")
-pygame.display.set_icon(playeri)
-#Makes screen
-sc = pygame.display.set_mode((800,800))
-sc.blit(back,(0,0))
-sc.blit(dishel,(0,0))
-# can be color of background
-#sc.fill((56,0,67))
-#sets background
-playerx = 370
-playery = 400
-#sc.blit(player,(playerx,playery))
-# makes player
-def play(x,y):
-    sc.blit(playeri,(x,y))
-#recounds voice
-def audio():
-# sets up mic
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        r.adjust_for_ambient_noise(source)
-        #r.adjust_for_ambient_noise(source)
-       # audio = r.listen(source,timeout=3,phrase_time_limit=1)
-        try:
+import speech_recognition as speech
+import threading as thread
+from time import sleep
+from random import randint
 
-            audio = r.listen(source,timeout=1.4,phrase_time_limit=1)
-        except:
+# Load sprites to memory
+back_img = pygame.image.load("spath.png")
+health_img = pygame.image.load("health.png")
+player_img = pygame.image.load("testgal.png")
+monster_img = pygame.image.load("tsarm.png")
+
+# Initialize window
+pygame.display.set_icon(player_img)
+screen = pygame.display.set_mode((800, 800))
+
+# Draw GUI elements to screen
+screen.blit(health_img, (0, 0))
+
+# Initialize player position
+player_x = 400
+player_y = 400
+
+# Initialize speech recognition object
+recognizer = speech.Recognizer()
+
+def random_bground():
+    if randint(0, 1):
+        return pygame.image.load("spath.png")
+    return pygame.image.load("spath2.png")
+
+def move_player_to(x, y):
+    screen.blit(player_img, (x, y))
+
+def audio_clip():
+    # Attempt to get audio clip from user
+    audio = {}
+    with speech.Microphone() as mic_handle:
+        try:
+            # Get audio from microphone
+            audio = recognizer.listen(mic_handle, timeout=100, phrase_time_limit=100)
+            # Adjust microphone for background noise
+            recognizer.adjust_for_ambient_noise(audio)
+        except Exception as e:
+            print("Warning: " + str(e))
             pass
 
-       # r.operation_timeout
-        said = ""
-       # r.operation_timeout
+    return audio
 
+def speech_input():
+    '''
+    Attempts to get user input as a string. If Google fails to get user input, will recursively try until input is "gotten"
+    :return:
+    '''
     try:
-        said = r.recognize_google(audio)
-        print(str(said))
+        return recognizer.recognize_google(audio_clip())
     except Exception as e:
-        print("I did not understand that")
-    return said
+        if str(e) == "":
+            print("Invalid input!")
+        else:
+            print("Error: " + str(e))
+        return speech_input()
 
-#playerx += 56
-# makes so it dose not close
-run = True
-while run:
+def user_input():
+    global player_x, player_y, screen, player_img
+
+    while True:
+        # Get text from user and output it to console
+        input_text = speech_input()
+        print("User input: \"" + input_text + "\"")
+
+        if "North" in input_text:
+            for i in range(25):
+                player_y -= 4
+
+                if player_y < 0:
+                    player_y = 800
+                    back_img = random_bground()
+
+                sleep(0.01)
+        if "West" in input_text:
+            for i in range(25):
+                player_x -= 4
+
+                if player_x < 0:
+                    player_x = 800
+                    back_img = random_bground()
+
+                sleep(0.01)
+        if "East" in input_text:
+            for i in range(25):
+                player_x += 4
+
+                if player_x > 800:
+                    player_x = 0
+                    back_img = random_bground()
+
+                sleep(0.01)
+        if "South" in input_text:
+            for i in range(25):
+                player_y += 4
+
+                if player_y > 800:
+                    player_y = 0
+                    back_img = random_bground()
+
+                sleep(0.01)
+        if "check health" in input_text:
+            print("Check health")
+        if "exit" in input_text:
+            exit(0)
+
+def render():
+    # Handle window events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
-    voice = audio()
-    print(voice)
-    # makes it go north
-    if "North" in voice:
-        hi = 1
-        #print(hi)
-        voice = audio()
-        while hi == 1:
-            if playery <= 0:
-                playery = 0
-            else:
-                for i in range(0,5):
-                    playery += -5
-            # updates and makes to go forward
-            sc.blit(back, (0, 0))
-            play(playerx, playery)
-            pygame.display.update()
-            #playery += -35
-            voice = audio()
-           # print(voice)
-            # stops going forward
-            if "stop" in voice:
-                hi = 0
-        # change y axes up
-        #playery += -35
-        print(voice)
-    if "West" in voice:
-        hi = 1
-        while hi == 1:
-        # change y axes left
-            if playerx <= 0:
-                playerx = 0
-            else:
-                playerx += -95
-            sc.blit(back, (0, 0))
-            play(playerx, playery)
-            pygame.display.update()
-            voice = audio()
-            if "stop" in voice:
-                hi = 0
+            exit(0)
 
-    if "East" in voice:
-        hi = 1
-        while hi == 1:
-        # change x axis right
-            if playerx >= 800:
-                playerx = 760
-            else:
-                playerx += 95
-            sc.blit(back, (0, 0))
-            play(playerx, playery)
-            pygame.display.update()
-            voice = audio()
-            if "stop" in voice:
-                hi = 0
-    if "South" in voice:
-        hi = 1
-        while hi == 1:
-        # change y axes down
-            if playery >= 800:
-                playery = 760
-            else:
-                playery += 45
-            sc.blit(back, (0, 0))
-            play(playerx, playery)
-            pygame.display.update()
-            voice = audio()
-            if "stop" in voice:
-                hi = 0
-    if "check health" in voice:
-        if heath == 10:
-            mh = pygame.image.load("10.png")
-            sc.blit(mh, (0, 0))
-            pygame.display.update()
-            time.sleep(3)
-            sc.blit( dishel, (0, 0))
-    #if "hit"
-    if "exit" in voice:
-        # this exits the game
-        run = False
-    #playerx_ch = -70.0
-    #sc.remove(playeri)
-    #playerx += 56
-   # sc.blit(back,(0,0))
-    play(playerx,playery)
-    # chages ever thing
+    # Clear last frame
+    screen.blit(back_img, (0, 0))
+
+    # Draw player at (player_x, player_y)
+    move_player_to(player_x, player_y)
+
+    # Swap framebuffer (Output updated rendered image to screen)
     pygame.display.update()
+
+# Main loop
+thread.Thread(target=user_input, daemon=True).start()
+
+while True:
+    render()
