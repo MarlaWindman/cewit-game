@@ -101,7 +101,7 @@ while run:
         while hi == 1:
         # change x axis right
             if playerx >= 800:
-                playerx = 780
+                playerx = 760
             else:
                 playerx += 95
             sc.blit(back, (0, 0))
@@ -115,7 +115,7 @@ while run:
         while hi == 1:
         # change y axes down
             if playery >= 800:
-                playery = 0
+                playery = 760
             else:
                 playery += 45
             sc.blit(back, (0, 0))
@@ -124,6 +124,8 @@ while run:
             voice = audio()
             if "stop" in voice:
                 hi = 0
+    if "check health" in voice:
+
     if "exit" in voice:
         # this exits the game
         run = False
