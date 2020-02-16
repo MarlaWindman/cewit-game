@@ -124,7 +124,7 @@ while run:
             voice = audio()
             if "stop" in voice:
                 hi = 0
-    if "check health" in voice:
+   # if "check health" in voice:
 
     if "exit" in voice:
         # this exits the game
