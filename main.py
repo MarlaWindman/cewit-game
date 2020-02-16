@@ -3,7 +3,7 @@ import os
 import time
 import playsound
 import speech_recognition as sr
-from gtts import gTTS
+from gtts import gTTSsf
 heath = 10
 #creats image
 back = pygame.image.load("spath.png")
@@ -18,10 +18,8 @@ sc.blit(dishel,(0,0))
 # can be color of background
 #sc.fill((56,0,67))
 #sets background
-player = pygame.image
 playerx = 370
 playery = 400
-playerx_ch = 0
 #sc.blit(player,(playerx,playery))
 # makes player
 def play(x,y):
