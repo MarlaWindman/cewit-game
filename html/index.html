@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shrek Simulator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* CSS rules for tablets */
+        @media only screen and (min-width:721px) and (max-width:960px)
+        {
+            .desktop {display:none;}
+            .phone {display:none;}
+        }
+        /* CSS rules for desktops */
+        @media only screen and (min-width:961px)
+        {
+            .tablet {display:none;}
+            .phone {display:none;}
+        }
+        h1{
+            color:white;
+            font-family:"Arial",Arial,sans-serif;
+
+        }
+        h3{
+            color:white;
+            font-family:"Arial",Arial,sans-serif;
+
+        }
+        li{
+            color:white;
+            font-family:"Arial",Arial,sans-serif;
+
+        }
+        .mainText{
+            position:fixed;
+            margin-left:45%;
+            margin-top:25%;
+        }
+        .icons{
+            position:fixed;
+            right:10%;
+            top:10%;
+        }
+        .backGround{
+            position:fixed;
+            width:fit-content;
+            height:100vh;
+            z-index:-1000;
+            top:0;
+            left:0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="mainText">
+
+    <h1>
+        CEWIT VoiceGame
+    </h1>
+
+    <h3>
+        Move Shrek around the world with your voice!!!!!
+    </h3>
+
+</div>
+<div class="backGround">
+    <video id="Background" autoplay="" muted="" loop="" src="background.mp4" type="video/mp4" >
+    </video>
+</div>
+<div>
+    <ul class = "icons">
+        <ul class = "fa-ul">
+            <li><i class="fa-li fa fa-check-square"></i><a href=""> About the Game </a></li>
+            <li><i class="fa-li fa fa-refresh fa-spin"></i><a href="">How to play</a></li>
+            <li><i class="fa-li fa fa-refresh fa-spin"></i><a href="">Who Made It</a></li>
+        </ul>
+    </ul>
+</div>
+</body>
+</html>
