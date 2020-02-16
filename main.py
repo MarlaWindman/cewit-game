@@ -30,7 +30,7 @@ def audio():
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source)
         #r.adjust_for_ambient_noise(source)
-        audio = r.listen(source,timeout=1,phrase_time_limit=2)
+        audio = r.listen(source,timeout=1.75,phrase_time_limit=.5)
        # r.operation_timeout
         said = ""
        # r.operation_timeout
